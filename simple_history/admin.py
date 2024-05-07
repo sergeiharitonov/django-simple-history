@@ -6,11 +6,12 @@ from django.contrib.admin import helpers
 from django.contrib.admin.utils import unquote
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, render
-from django.urls import re_path, reverse
+from django.urls import reverse
 from django.utils.encoding import force_str
 from django.utils.html import mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import gettext as _
+from django.conf.urls import url
 
 from . import utils
 
@@ -30,7 +31,7 @@ class SimpleHistoryAdmin(admin.ModelAdmin):
         opts = self.model._meta
         info = opts.app_label, opts.model_name
         history_urls = [
-            re_path(
+            url(
                 "^([^/]+)/history/([^/]+)/$",
                 admin_site.admin_view(self.history_form_view),
                 name="%s_%s_simple_history" % info,
